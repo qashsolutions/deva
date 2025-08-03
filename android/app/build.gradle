@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
+apply plugin: "com.google.firebase.crashlytics"
 
 react {
     /* Folders */
@@ -102,6 +103,19 @@ dependencies {
     implementation 'com.google.firebase:firebase-functions'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-perf'
+    
+    // Google Play Services (for location, maps)
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    
+    // Kotlin support
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    
+    // Stripe (handled by React Native Stripe SDK)
+    // Camera/Image picker (handled by React Native libraries)
+    // AI SDKs (handled via REST APIs, no native dependencies needed)
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
