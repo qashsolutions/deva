@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriestConnect - Mobile App Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .phone-mockup {
+            background: #2c3e50;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: #555;
+            border-radius: 3px;
+        }
+        
+        .screen {
+            background: white;
+            border-radius: 20px;
+            height: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .screen-header {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .screen-content {
+            padding: 20px;
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+        
+        .user-type {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .priest-type {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .stat-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .priest-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #f0f0f0;
+        }
+        
+        .priest-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .priest-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .priest-info {
+            flex: 1;
+        }
+        
+        .priest-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .priest-temple {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .languages {
+            display: flex;
+            gap: 5px;
+            margin: 8px 0;
+        }
+        
+        .language-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+        
+        .services {
+            display: flex;
+            gap: 5px;
+            margin: 8px 0;
+            flex-wrap: wrap;
+        }
+        
+        .service-tag {
+            background: #fff3e0;
+            color: #ef6c00;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+        
+        .price-distance {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .distance {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stars {
+            color: #ffc107;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 15px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .calendar-day.available {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+        
+        .calendar-day.booked {
+            background: #ffcdd2;
+            color: #d32f2f;
+        }
+        
+        .calendar-day.locked {
+            background: #f5f5f5;
+            color: #999;
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-select {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .search-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .location-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .search-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .earnings-breakdown {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .earnings-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .earnings-total {
+            border-top: 2px solid #ddd;
+            padding-top: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PriestConnect - Mobile App Mockups</h1>
+        
+        <!-- Priest Screens -->
+        <div class="mockup-grid">
+            <!-- Priest Dashboard -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>🕉️ PriestConnect</span>
+                        <span>🔔</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Priest Dashboard</div>
+                        <div class="priest-type">Temple Employee</div>
+                        
+                        <div class="priest-header">
+                            <div class="priest-avatar">RP</div>
+                            <div class="priest-info">
+                                <div class="priest-name">Pandit Raj Patel</div>
+                                <div class="priest-temple">Shiva Mandir, Edison NJ</div>
+                                <div class="rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                    <span>4.8 (47 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div class="stat-card">
+                                <div class="stat-number">3</div>
+                                <div class="stat-label">Today's Bookings</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">$420</div>
+                                <div class="stat-label">This Week</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <strong>Next Booking</strong><br>
+                            <small>Tomorrow 10:00 AM</small><br>
+                            Griha Pravesh - Johnson Family<br>
+                            <span class="price">$150</span>
+                        </div>
+                        
+                        <div class="earnings-breakdown">
+                            <strong>Weekly Earnings Breakdown</strong>
+                            <div class="earnings-row">
+                                <span>Total Earned:</span>
+                                <span>$600</span>
+                            </div>
+                            <div class="earnings-row">
+                                <span>Temple Share (30%):</span>
+                                <span>-$180</span>
+                            </div>
+                            <div class="earnings-row earnings-total">
+                                <span>Your Earnings:</span>
+                                <span>$420</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn">Manage Availability</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Priest Calendar -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Availability</span>
+                        <span>March 2025</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Manage Availability</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 10px; text-align: center; font-weight: bold; font-size: 12px;">
+                            <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+                        </div>
+                        
+                        <div class="calendar-grid">
+                            <div class="calendar-day locked">1</div>
+                            <div class="calendar-day locked">2</div>
+                            <div class="calendar-day locked">3</div>
+                            <div class="calendar-day locked">4</div>
+                            <div class="calendar-day locked">5</div>
+                            <div class="calendar-day available">6</div>
+                            <div class="calendar-day available">7</div>
+                            <div class="calendar-day available">8</div>
+                            <div class="calendar-day booked">9</div>
+                            <div class="calendar-day available">10</div>
+                            <div class="calendar-day available">11</div>
+                            <div class="calendar-day available">12</div>
+                            <div class="calendar-day available">13</div>
+                            <div class="calendar-day available">14</div>
+                            <div class="calendar-day available">15</div>
+                            <div class="calendar-day booked">16</div>
+                            <div class="calendar-day available">17</div>
+                            <div class="calendar-day available">18</div>
+                            <div class="calendar-day available">19</div>
+                            <div class="calendar-day available">20</div>
+                            <div class="calendar-day available">21</div>
+                            <div class="calendar-day available">22</div>
+                            <div class="calendar-day booked">23</div>
+                            <div class="calendar-day available">24</div>
+                            <div class="calendar-day available">25</div>
+                            <div class="calendar-day available">26</div>
+                            <div class="calendar-day available">27</div>
+                            <div class="calendar-day available">28</div>
+                            <div class="calendar-day available">29</div>
+                            <div class="calendar-day available">30</div>
+                            <div class="calendar-day available">31</div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <div style="width: 15px; height: 15px; background: #c8e6c9; border-radius: 3px;"></div>
+                                <span style="font-size: 12px;">Available</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <div style="width: 15px; height: 15px; background: #ffcdd2; border-radius: 3px;"></div>
+                                <span style="font-size: 12px;">Booked</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <div style="width: 15px; height: 15px; background: #f5f5f5; border-radius: 3px;"></div>
+                                <span style="font-size: 12px;">Cannot modify (3-day rule)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <strong>Selected: March 15</strong><br>
+                            <small>Add time slots for this day</small><br>
+                            <input type="time" value="09:00" style="margin: 5px 5px 5px 0; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <input type="time" value="11:00" style="margin: 5px 0; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                        </div>
+                        
+                        <button class="btn">Save Availability</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Devotee Search -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>🕉️ PriestConnect</span>
+                        <span>👤</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Find Priests</div>
+                        
+                        <div class="search-header">
+                            <input type="text" class="location-input" placeholder="Enter ZIP code" value="07302">
+                            <button class="search-btn">🔍</button>
+                        </div>
+                        
+                        <div class="filter-bar">
+                            <select class="filter-select">
+                                <option>All Services</option>
+                                <option>Wedding Ceremony</option>
+                                <option>House Blessing</option>
+                                <option>Satyanarayan Puja</option>
+                                <option>Griha Pravesh</option>
+                            </select>
+                            <select class="filter-select">
+                                <option>All Languages</option>
+                                <option>Hindi</option>
+                                <option>Tamil</option>
+                                <option>Telugu</option>
+                                <option>Sanskrit</option>
+                            </select>
+                        </div>
+                        
+                        <div style="font-size: 12px; color: #666; margin-bottom: 15px;">
+                            12 priests found within 25 miles • You can select up to 2 priests
+                        </div>
+                        
+                        <div class="priest-card">
+                            <div class="priest-header">
+                                <div class="priest-avatar">RP</div>
+                                <div class="priest-info">
+                                    <div class="priest-name">Pandit Raj Patel</div>
+                                    <div class="priest-temple">Shiva Mandir, Edison</div>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span style="font-size: 12px;">4.8 (47)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="languages">
+                                <span class="language-tag">Hindi</span>
+                                <span class="language-tag">English</span>
+                                <span class="language-tag">Gujarati</span>
+                            </div>
+                            <div class="services">
+                                <span class="service-tag">Wedding</span>
+                                <span class="service-tag">House Blessing</span>
+                                <span class="service-tag">Puja</span>
+                            </div>
+                            <div class="price-distance">
+                                <span class="price">From $150</span>
+                                <span class="distance">8.2 miles away</span>
+                            </div>
+                            <button class="btn">View Details</button>
+                        </div>
+                        
+                        <div class="priest-card">
+                            <div class="priest-header">
+                                <div class="priest-avatar">AS</div>
+                                <div class="priest-info">
+                                    <div class="priest-name">Acharya Suresh</div>
+                                    <div class="priest-temple">Independent Priest</div>
+                                    <div class="rating">
+                                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                                        <span style="font-size: 12px;">4.9 (23)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="languages">
+                                <span class="language-tag">Tamil</span>
+                                <span class="language-tag">English</span>
+                                <span class="language-tag">Sanskrit</span>
+                            </div>
+                            <div class="services">
+                                <span class="service-tag">Wedding</span>
+                                <span class="service-tag">Temple Puja</span>
+                            </div>
+                            <div class="price-distance">
+                                <span class="price">From $200</span>
+                                <span class="distance">12.5 miles away</span>
+                            </div>
+                            <button class="btn">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Devotee Booking -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Book Service</span>
+                        <span>♥</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Booking Details</div>
+                        
+                        <div class="priest-header">
+                            <div class="priest-avatar">RP</div>
+                            <div class="priest-info">
+                                <div class="priest-name">Pandit Raj Patel</div>
+                                <div class="priest-temple">Shiva Mandir, Edison</div>
+                                <div class="rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                    <span>4.8 (47 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <strong>Selected Service</strong><br>
+                            <select style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                                <option>Griha Pravesh (House Blessing) - $150</option>
+                                <option>Satyanarayan Puja - $125</option>
+                                <option>Wedding Ceremony - $350</option>
+                            </select>
+                        </div>
+                        
+                        <div class="card">
+                            <strong>Select Date & Time</strong><br>
+                            <input type="date" value="2025-03-15" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;"><br>
+                            <select style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                                <option>10:00 AM - 12:00 PM</option>
+                                <option>2:00 PM - 4:00 PM</option>
+                                <option>4:00 PM - 6:00 PM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="card">
+                            <strong>Your Location</strong><br>
+                            <input type="text" placeholder="Enter your address" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                Travel distance: 8.2 miles (included in price)
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <strong>Booking Summary</strong><br>
+                            <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                <span>Service Fee:</span>
+                                <span>$150.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                <span>Platform Fee:</span>
+                                <span>$7.50</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin: 5px 0; padding-top: 5px; border-top: 1px solid #ddd; font-weight: bold;">
+                                <span>Total:</span>
+                                <span>$157.50</span>
+                            </div>
+                            <div style="font-size: 11px; color: #666; margin-top: 8px;">
+                                * 10% cancellation fee applies if cancelled within 24 hours
+                            </div>
+                        </div>
+                        
+                        <button class="btn">Pay Now & Book</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Priest Type Selection Screen -->
+        <div style="max-width: 400px; margin: 0 auto;">
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>🕉️ Setup Profile</span>
+                        <span></span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Choose Your Priest Type</div>
+                        
+                        <div style="margin-bottom: 30px; text-align: center; color: #666;">
+                            This helps us set up the right payment structure for you
+                        </div>
+                        
+                        <div class="priest-card" style="border: 2px solid #ff6b35; cursor: pointer;">
+                            <div style="font-weight: bold; margin-bottom: 8px;">🏛️ Temple Employee</div>
+                            <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+                                I work for a temple and share earnings
+                            </div>
+                            <div style="font-size: 12px; color: #999;">
+                                • Temple gets a percentage of bookings<br>
+                                • Streamlined temple payment process<br>
+                                • Access to temple's devotee network
+                            </div>
+                        </div>
+                        
+                        <div class="priest-card" style="cursor: pointer;">
+                            <div style="font-weight: bold; margin-bottom: 8px;">🏛️👑 Temple Owner</div>
+                            <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+                                I own/manage a temple
+                            </div>
+                            <div style="font-size: 12px; color: #999;">
+                                • Keep all earnings from personal bookings<br>
+                                • Manage other priests under your temple<br>
+                                • Promote your temple to devotees
+                            </div>
+                        </div>
+                        
+                        <div class="priest-card" style="cursor: pointer;">
+                            <div style="font-weight: bold; margin-bottom: 8px;">🏠 Independent Priest</div>
+                            <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+                                I work independently (part-time/full-time)
+                            </div>
+                            <div style="font-size: 12px; color: #999;">
+                                • Keep 100% of earnings (minus platform fee)<br>
+                                • Set your own rates and schedule<br>
+                                • Perfect for weekend/part-time priests
+                            </div>
+                        </div>
+                        
+                        <button class="btn">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

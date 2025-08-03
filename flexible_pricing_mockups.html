@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriestConnect - Flexible Pricing System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .mockup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .phone-mockup {
+            background: #2c3e50;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: #555;
+            border-radius: 3px;
+        }
+        
+        .screen {
+            background: white;
+            border-radius: 20px;
+            height: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .screen-header {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 15px 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .screen-content {
+            padding: 20px;
+            height: calc(100% - 60px);
+            overflow-y: auto;
+        }
+        
+        .user-type {
+            text-align: center;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .priest-type {
+            background: #e74c3c;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff6b35;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #f0f0f0;
+        }
+        
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .service-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background: #ff6b35;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            right: 2px;
+            transition: all 0.2s;
+        }
+        
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .price-input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .policy-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 3px solid #ff6b35;
+        }
+        
+        .policy-header {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .policy-detail {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            width: auto;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: #ff6b35;
+            border: 2px solid #ff6b35;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        
+        .discount-badge {
+            background: #4caf50;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .flexible-pricing {
+            background: linear-gradient(45deg, #4caf50, #45a049);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .terms-summary {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 10px 0;
+            border-left: 3px solid #2196f3;
+        }
+        
+        .terms-title {
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: #1976d2;
+        }
+        
+        .terms-detail {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.3;
+        }
+        
+        .negotiable-tag {
+            background: #fff3e0;
+            color: #f57c00;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .priest-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #f0f0f0;
+        }
+        
+        .priest-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .priest-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .priest-info {
+            flex: 1;
+        }
+        
+        .priest-name {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .priest-temple {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .stars {
+            color: #ffc107;
+        }
+        
+        .retention-info {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+        
+        .retention-amount {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PriestConnect - Flexible Pricing System</h1>
+        
+        <div class="mockup-grid">
+            <!-- Priest Service Pricing Setup -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Service Pricing</span>
+                        <span>💰</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Setup Service Pricing</div>
+                        <div class="priest-type">Independent Priest</div>
+                        
+                        <div class="pricing-card">
+                            <div class="service-header">
+                                <span class="service-name">House Blessing</span>
+                                <div class="toggle-switch"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Pricing Type</label>
+                                <select class="form-select">
+                                    <option>Fixed Price</option>
+                                    <option selected>Price Range (Negotiable)</option>
+                                    <option>Quote on Request</option>
+                                </select>
+                            </div>
+                            
+                            <div class="price-range">
+                                <span style="font-size: 12px; color: #666;">From</span>
+                                <input type="number" class="price-input" value="150" placeholder="Min">
+                                <span style="font-size: 12px; color: #666;">to</span>
+                                <input type="number" class="price-input" value="200" placeholder="Max">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Duration (hours)</label>
+                                <input type="number" class="form-input" value="2" placeholder="Service duration">
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 12px;">Include travel within 15 miles</span>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 12px;">Offer repeat customer discount</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pricing-card">
+                            <div class="service-header">
+                                <span class="service-name">Wedding Ceremony</span>
+                                <div class="toggle-switch"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Pricing Type</label>
+                                <select class="form-select">
+                                    <option selected>Fixed Price</option>
+                                    <option>Price Range (Negotiable)</option>
+                                    <option>Quote on Request</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="number" class="form-input" value="450" placeholder="Service price">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Duration (hours)</label>
+                                <input type="number" class="form-input" value="4" placeholder="Service duration">
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <input type="checkbox">
+                                <span style="font-size: 12px;">Seasonal pricing (peak wedding season)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn">Save Pricing</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment & Cancellation Terms -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Payment Terms</span>
+                        <span>📋</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Payment & Cancellation Policy</div>
+                        
+                        <div class="card">
+                            <div class="form-label">Advance Payment Required</div>
+                            <select class="form-select">
+                                <option>25% advance, 75% on completion</option>
+                                <option selected>50% advance, 50% on completion</option>
+                                <option>75% advance, 25% on completion</option>
+                                <option>100% advance payment</option>
+                            </select>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Repeat Customer Benefits</div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 12px;">Retain $25 from each booking for future discounts</span>
+                            </div>
+                            <div style="font-size: 11px; color: #666; margin-top: 5px;">
+                                This amount will be credited to returning customers
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Cancellation Policy</div>
+                            
+                            <div class="policy-item">
+                                <div class="policy-header">Free Cancellation</div>
+                                <div class="policy-detail">Until 48 hours before service</div>
+                            </div>
+                            
+                            <div class="policy-item">
+                                <div class="policy-header">25% Cancellation Fee</div>
+                                <div class="policy-detail">24-48 hours before service</div>
+                            </div>
+                            
+                            <div class="policy-item">
+                                <div class="policy-header">50% Cancellation Fee</div>
+                                <div class="policy-detail">12-24 hours before service</div>
+                            </div>
+                            
+                            <div class="policy-item">
+                                <div class="policy-header">No Refund</div>
+                                <div class="policy-detail">Less than 12 hours before service</div>
+                            </div>
+                            
+                            <button class="btn btn-small btn-outline">Customize Policy</button>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Emergency Exceptions</div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 12px;">Weather-related cancellations (full refund)</span>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" checked>
+                                <span style="font-size: 12px;">Medical emergencies (case-by-case)</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn">Save Terms</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Devotee View - Flexible Pricing -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Pandit Raj Patel</span>
+                        <span>💬</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Service Details</div>
+                        
+                        <div class="priest-header">
+                            <div class="priest-avatar">RP</div>
+                            <div class="priest-info">
+                                <div class="priest-name">Pandit Raj Patel</div>
+                                <div class="priest-temple">Independent Priest</div>
+                                <div class="rating">
+                                    <span class="stars">⭐⭐⭐⭐⭐</span>
+                                    <span style="font-size: 12px;">4.8 (47)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="priest-card">
+                            <div class="flexible-pricing">Flexible Pricing Available</div>
+                            <div style="font-weight: bold; margin-bottom: 8px;">🏠 House Blessing (Griha Pravesh)</div>
+                            <div style="font-size: 14px; color: #666; margin-bottom: 10px;">Duration: 2 hours • Travel included within 15 miles</div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-size: 14px;">Price Range:</span>
+                                <span style="font-weight: bold; color: #2e7d32;">$150 - $200</span>
+                            </div>
+                            
+                            <div class="negotiable-tag">💬 Price negotiable based on requirements</div>
+                            
+                            <div class="terms-summary">
+                                <div class="terms-title">Payment Terms</div>
+                                <div class="terms-detail">• 50% advance, 50% after completion<br>• $25 retained for repeat customer discount</div>
+                            </div>
+                            
+                            <div class="terms-summary">
+                                <div class="terms-title">Cancellation Policy</div>
+                                <div class="terms-detail">• Free until 48hrs before<br>• 25% fee 24-48hrs before<br>• 50% fee 12-24hrs before<br>• No refund under 12hrs</div>
+                            </div>
+                            
+                            <button class="btn">Request Quote & Book</button>
+                        </div>
+                        
+                        <div class="priest-card">
+                            <div style="font-weight: bold; margin-bottom: 8px;">💒 Wedding Ceremony</div>
+                            <div style="font-size: 14px; color: #666; margin-bottom: 10px;">Duration: 4 hours • Traditional Vedic ceremony</div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-size: 14px;">Fixed Price:</span>
+                                <span style="font-weight: bold; color: #2e7d32;">$450</span>
+                            </div>
+                            
+                            <div class="terms-summary">
+                                <div class="terms-title">Payment Terms</div>
+                                <div class="terms-detail">• 50% advance, 50% after completion</div>
+                            </div>
+                            
+                            <button class="btn">Book Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Booking Flow with Negotiation -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Request Quote</span>
+                        <span>💰</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">House Blessing Quote Request</div>
+                        
+                        <div class="priest-header">
+                            <div class="priest-avatar">RP</div>
+                            <div class="priest-info">
+                                <div class="priest-name">Pandit Raj Patel</div>
+                                <div style="font-size: 12px; color: #666;">Usually responds within 2 hours</div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Service Details</div>
+                            <div style="font-size: 14px; margin-bottom: 10px;">🏠 House Blessing (Griha Pravesh)</div>
+                            <div style="font-size: 12px; color: #666;">Price range: $150 - $200</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Preferred Date & Time</div>
+                            <input type="date" class="form-input" value="2025-03-15" style="margin-bottom: 8px;">
+                            <select class="form-select">
+                                <option>10:00 AM - 12:00 PM</option>
+                                <option>2:00 PM - 4:00 PM</option>
+                                <option>4:00 PM - 6:00 PM</option>
+                            </select>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Service Requirements</div>
+                            <textarea class="form-input" rows="3" placeholder="Describe your specific needs, number of attendees, special requests, etc.">Traditional house blessing for new home. Expecting 15-20 family members. Would like full Sanskrit ceremony with English explanations.</textarea>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Your Budget (Optional)</div>
+                            <input type="number" class="form-input" placeholder="Enter your preferred price" value="175">
+                            <div style="font-size: 11px; color: #666; margin-top: 5px;">
+                                This helps the priest provide an accurate quote
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="form-label">Service Address</div>
+                            <input type="text" class="form-input" placeholder="Enter complete address">
+                            <div style="font-size: 11px; color: #666; margin-top: 5px;">
+                                Distance: 8.2 miles (travel included)
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e8f5e8; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 12px;">
+                            <div style="font-weight: bold; color: #2e7d32; margin-bottom: 5px;">✓ Benefits for you:</div>
+                            <div>• Priest will provide personalized quote<br>• $25 credit for your next booking<br>• Flexible payment terms (50% advance)</div>
+                        </div>
+                        
+                        <button class="btn">Send Quote Request</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Priest Quote Response -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>← Quote Response</span>
+                        <span>📩</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Quote from Pandit Raj Patel</div>
+                        
+                        <div style="background: #e3f2fd; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                            <div style="font-weight: bold; margin-bottom: 8px;">🎯 Personalized Quote</div>
+                            <div style="font-size: 14px; margin-bottom: 10px;">"Based on your requirements for a traditional ceremony with English explanations for 15-20 attendees:"</div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                                <span>Service Price:</span>
+                                <span style="font-weight: bold; color: #2e7d32;">$175</span>
+                            </div>
+                            
+                            <div style="font-size: 12px; color: #666;">
+                                "I appreciate your budget consideration. This includes full ceremony, all materials, and travel to your location."
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div style="font-weight: bold; margin-bottom: 8px;">📋 What's Included</div>
+                            <div style="font-size: 12px; color: #666; line-height: 1.4;">
+                                • Complete Griha Pravesh ceremony (2 hours)<br>
+                                • All puja materials and flowers<br>
+                                • Sanskrit chants with English explanations<br>
+                                • Blessing ceremony for all family members<br>
+                                • Travel within 15 miles<br>
+                                • Post-ceremony guidance
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div style="font-weight: bold; margin-bottom: 8px;">💳 Payment Terms</div>
+                            <div style="font-size: 12px; color: #666; line-height: 1.4;">
+                                • Advance payment: $87.50 (50%)<br>
+                                • Remaining payment: $87.50 (after service)<br>
+                                • $25 will be retained for your next booking discount
+                            </div>
+                        </div>
+                        
+                        <div class="retention-info">
+                            <div style="font-weight: bold; margin-bottom: 5px;">🎁 Loyalty Benefit</div>
+                            <div>You'll receive a <span class="retention-amount">$25 credit</span> automatically applied to your next booking with me!</div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-outline" style="flex: 1;">Counter Offer</button>
+                            <button class="btn" style="flex: 1;">Accept & Pay $87.50</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Devotee Booking History with Credits -->
+            <div class="phone-mockup">
+                <div class="screen">
+                    <div class="screen-header">
+                        <span>My Bookings</span>
+                        <span>💰</span>
+                    </div>
+                    <div class="screen-content">
+                        <div class="user-type">Booking History & Credits</div>
+                        
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                            <div style="font-weight: bold; color: #2e7d32; margin-bottom: 8px;">💰 Your Credits</div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>Available Credits:</span>
+                                <span style="font-weight: bold; font-size: 18px; color: #2e7d32;">$50</span>
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                From 2 previous bookings • Auto-applied to next booking
+                            </div>
+                        </div>
+                        
+                        <div class="priest-card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                                <div>
+                                    <div style="font-weight: bold;">March 15, 2025 • 10:00 AM</div>
+                                    <div style="color: #666; font-size: 14px;">House Blessing with Pandit Raj Patel</div>
+                                    <div style="font-size: 12px; color: #666;">Personalized quote: $175</div>
+                                </div>
+                                <span style="background: #c8e6c9; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 12px;">Confirmed</span>
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                                    <span>Service Price:</span>
+                                    <span>$175.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                                    <span>Advance Paid:</span>
+                                    <span>$87.50</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                                    <span>Due on completion:</span>
+                                    <span>$87.50</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #4caf50; font-weight: bold;">
+                                    <span>Credit earned:</span>
+                                    <span>+$25</span>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #fff3e0; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 10px;">
+                                <strong>Cancellation Policy:</strong> Free until 48hrs • 25% fee 24-48hrs • 50% fee 12-24hrs
+                            </div>
+                        </div>
+                        
+                        <div class="priest-card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                                <div>
+                                    <div style="font-weight: bold;">February 14, 2025 • 11:00 AM</div>
+                                    <div style="color: #666; font-size: 14px;">Wedding Ceremony with Pandit Vikram</div>
+                                    <div style="font-size: 12px; color: #666;">Fixed price: $450</div>
+                                </div>
+                                <span style="background: #e1f5fe; color: #0277bd; padding: 4px 8px; border-radius: 12px; font-size: 12px;">Completed</span>
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px;">
+                                    <span>Total Paid:</span>
+                                    <span>$450.00</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 12px; color: #4caf50; font-weight: bold;">
+                                    <span>Credit earned:</span>
+                                    <span>+$25</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-small btn-outline">Rate & Review</button>
+                                <button class="btn btn-small">Book Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
