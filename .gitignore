@@ -138,6 +138,7 @@ firebase-debug.log
 .firebaserc
 google-services.json
 GoogleService-Info.plist
+*.json
 
 # Misc
 .eslintcache

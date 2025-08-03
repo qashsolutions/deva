@@ -70,6 +70,14 @@ export interface User {
   isVerified: boolean;
   isBlocked?: boolean;
   blockedReason?: string;
+  
+  // Premium/Promotion fields
+  isPremium?: boolean;
+  premiumStartDate?: Date;
+  premiumEndDate?: Date;
+  premiumZipCodes?: string[]; // ZIP codes where priest is promoted
+  premiumFeeAmount?: number; // Amount paid for premium placement
+  premiumTier?: 'silver' | 'gold' | 'platinum'; // Higher tier = higher priority
 }
 
 export interface Temple {

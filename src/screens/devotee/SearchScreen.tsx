@@ -242,16 +242,31 @@ export const SearchScreen: React.FC = () => {
     </View>
   );
 
-  const renderPriestCard = ({ item }: { item: PriestProfile }) => {
+  const renderPriestCard = ({ item, index }: { item: PriestProfile; index: number }) => {
     const minPrice = getMinPrice(item);
     const distance = Math.floor(Math.random() * 25) + 1; // Mock distance
+    const isPremium = item.isPremium && item.premiumEndDate && new Date(item.premiumEndDate) > new Date();
+    const isTopThree = isPremium && index < 3;
     
     return (
       <Card
         onPress={() => handlePriestPress(item.id)}
         margin="small"
-        style={styles.priestCard}
+        style={[styles.priestCard, isTopThree && styles.premiumCard]}
       >
+        {isTopThree && (
+          <View style={styles.premiumBanner}>
+            <Ionicons name="star" size={16} color={colors.white} />
+            <Text style={styles.premiumText}>FEATURED</Text>
+            {item.premiumTier === 'platinum' && (
+              <Badge text="PLATINUM" variant="warning" size="small" style={styles.tierBadge} />
+            )}
+            {item.premiumTier === 'gold' && (
+              <Badge text="GOLD" variant="secondary" size="small" style={styles.tierBadge} />
+            )}
+          </View>
+        )}
+        
         <View style={styles.priestCardContent}>
           <UserAvatar
             source={{ uri: item.photoURL }}
@@ -843,5 +858,37 @@ const styles = StyleSheet.create({
     padding: spacing.large,
     borderTopWidth: 1,
     borderTopColor: colors.gray[200],
+  },
+  premiumCard: {
+    borderColor: colors.warning,
+    borderWidth: 2,
+    shadowColor: colors.warning,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  premiumBanner: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: colors.warning,
+    paddingHorizontal: spacing.medium,
+    paddingVertical: spacing.xsmall,
+    borderTopRightRadius: borderRadius.medium - 2,
+    borderBottomLeftRadius: borderRadius.small,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xsmall,
+    zIndex: 1,
+  },
+  premiumText: {
+    fontSize: fontSize.xsmall,
+    fontWeight: '700',
+    color: colors.white,
+    letterSpacing: 0.5,
+  },
+  tierBadge: {
+    marginLeft: spacing.xsmall,
   },
 });

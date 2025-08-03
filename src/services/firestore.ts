@@ -98,15 +98,50 @@ export const searchPriests = async (
     ...doc.data(),
     createdAt: doc.data().createdAt?.toDate(),
     updatedAt: doc.data().updatedAt?.toDate(),
+    premiumStartDate: doc.data().premiumStartDate?.toDate(),
+    premiumEndDate: doc.data().premiumEndDate?.toDate(),
   })) as User[];
   
   // Additional filtering that can't be done in Firestore
-  return priests.filter(priest => {
+  let filteredPriests = priests.filter(priest => {
     if (filters?.serviceType && priest.specializations) {
       return priest.specializations.includes(filters.serviceType);
     }
     return true;
   });
+  
+  // Separate premium priests for the given ZIP code
+  const now = new Date();
+  const premiumPriests: User[] = [];
+  const regularPriests: User[] = [];
+  
+  filteredPriests.forEach(priest => {
+    const isActivePremium = priest.isPremium && 
+      priest.premiumEndDate && 
+      priest.premiumEndDate > now &&
+      priest.premiumZipCodes?.includes(zipCode);
+      
+    if (isActivePremium) {
+      premiumPriests.push(priest);
+    } else {
+      regularPriests.push(priest);
+    }
+  });
+  
+  // Sort premium priests by tier and fee amount
+  premiumPriests.sort((a, b) => {
+    // First sort by tier
+    const tierOrder = { platinum: 3, gold: 2, silver: 1 };
+    const aTier = tierOrder[a.premiumTier || 'silver'];
+    const bTier = tierOrder[b.premiumTier || 'silver'];
+    if (aTier !== bTier) return bTier - aTier;
+    
+    // Then by fee amount
+    return (b.premiumFeeAmount || 0) - (a.premiumFeeAmount || 0);
+  });
+  
+  // Return top 3 premium priests followed by regular priests
+  return [...premiumPriests.slice(0, 3), ...regularPriests];
 };
 
 // Service operations
@@ -342,4 +377,49 @@ export const addReview = async (
       });
     }
   }
+};
+
+// Premium/Promotion operations
+export const purchasePremiumPlacement = async (
+  priestId: string,
+  zipCodes: string[],
+  tier: 'silver' | 'gold' | 'platinum',
+  feeAmount: number
+): Promise<void> => {
+  const userRef = doc(db, COLLECTIONS.USERS, priestId);
+  const now = new Date();
+  const endDate = new Date(now);
+  endDate.setDate(endDate.getDate() + 7); // 7 days from now
+  
+  await updateDoc(userRef, {
+    isPremium: true,
+    premiumStartDate: Timestamp.fromDate(now),
+    premiumEndDate: Timestamp.fromDate(endDate),
+    premiumZipCodes: zipCodes,
+    premiumTier: tier,
+    premiumFeeAmount: feeAmount,
+    updatedAt: Timestamp.now(),
+  });
+};
+
+export const checkAndExpirePremiumPlacements = async (): Promise<void> => {
+  const now = new Date();
+  const q = query(
+    collection(db, COLLECTIONS.USERS),
+    where('isPremium', '==', true),
+    where('premiumEndDate', '<=', Timestamp.fromDate(now))
+  );
+  
+  const snapshot = await getDocs(q);
+  const batch = writeBatch(db);
+  
+  snapshot.docs.forEach(doc => {
+    batch.update(doc.ref, {
+      isPremium: false,
+      premiumZipCodes: [],
+      updatedAt: Timestamp.now(),
+    });
+  });
+  
+  await batch.commit();
 };
