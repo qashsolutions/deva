@@ -136,6 +136,8 @@ lerna-debug.log*
 .firebase/
 firebase-debug.log
 .firebaserc
+google-services.json
+GoogleService-Info.plist
 
 # Misc
 .eslintcache
