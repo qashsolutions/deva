@@ -1,6 +1,6 @@
 export const StripeConfig = {
   publishableKey: process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
-  merchantIdentifier: 'merchant.com.priestconnect.app',
+  merchantIdentifier: 'merchant.com.devebhyo.app',
   
   // Connect configuration
   connectClientId: process.env.EXPO_PUBLIC_STRIPE_CONNECT_CLIENT_ID || '',
@@ -23,11 +23,11 @@ export const StripeConfig = {
   
   // Apple Pay & Google Pay
   applePay: {
-    merchantIdentifier: 'merchant.com.priestconnect.app',
+    merchantIdentifier: 'merchant.com.devebhyo.app',
     merchantCountryCode: 'US',
   },
   googlePay: {
-    merchantName: 'PriestConnect',
+    merchantName: 'Devebhyo',
     testEnvironment: process.env.NODE_ENV !== 'production',
   },
 } as const;
