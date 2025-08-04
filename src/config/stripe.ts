@@ -11,8 +11,8 @@ export const StripeConfig = {
   
   // Payment settings
   currency: 'usd',
-  minimumBookingAmount: 2500, // $25.00 in cents
-  platformFeePercentage: 5,   // 5% platform fee
+  minimumBookingAmount: 1800, // $18.00 in cents
+  platformFeePercentage: 14,   // 14% platform fee
   
   // Escrow settings
   escrowHoldDays: 1,          // Hold funds for 1 day after service
@@ -74,8 +74,8 @@ export const CONNECT_REQUIREMENTS = {
 // Payment split configurations
 export const PAYMENT_SPLITS = {
   TEMPLE_EMPLOYEE_DEFAULT: 30, // 30% to temple
-  PLATFORM_FEE: 5, // 5% platform fee
-  LOYALTY_RETENTION_DEFAULT: 25, // $25 default retention
+  PLATFORM_FEE: 14, // 14% platform fee
+  LOYALTY_RETENTION_DEFAULT: 18, // $18 default retention
 } as const;
 
 // Refund policies

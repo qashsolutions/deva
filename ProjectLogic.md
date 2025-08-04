@@ -231,3 +231,76 @@ The app is now ready for local development with:
 3. Run `npx react-native run-android` or `run-ios` for testing
 4. Configure push notification certificates
 5. Set up CI/CD for automated builds
+
+##FIREBASE FUNCTIONS BACKEND DEPLOY COMPLETE##
+C:\Users\raman\OneDrive\Deva>firebase deploy --only functions
+
+=== Deploying to 'devebhyo-4a8a2'...
+
+i  deploying functions
+Running command: npm --prefix "$RESOURCE_DIR" run lint
+
+> lint
+> eslint --ext .js,.ts .
+
+=============
+
+WARNING: You are currently running a version of TypeScript which is not officially supported by @typescript-eslint/typescript-estree.
+
+You may find that it works just fine, or you may not.
+
+SUPPORTED TYPESCRIPT VERSIONS: >=3.3.1 <5.2.0
+
+YOUR TYPESCRIPT VERSION: 5.9.2
+
+Please only submit bug reports when using the officially supported version.
+
+=============
+Running command: npm --prefix "$RESOURCE_DIR" run build
+
+> build
+> tsc
+
++  functions: Finished running predeploy script.
+i  functions: preparing codebase default for deployment
+i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
+i  functions: ensuring required API cloudbuild.googleapis.com is enabled...
+i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled...
+i  functions: Loading and analyzing source code for codebase default to determine what to deploy
+Serving at port 8746
+
+i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled...
+i  functions: preparing functions directory for uploading...
+i  functions: packaged C:\Users\raman\OneDrive\Deva\functions (116.71 KB) for uploading
+! DEPRECATION NOTICE: Action required to deploy after Dec 31, 2025
+
+  functions.config() API is deprecated.
+  Cloud Runtime Configuration API, the Google Cloud service used to store function configuration data, will be shut down on December 31, 2025. As a result, you must migrate away from using functions.config() to continue deploying your functions after December 31, 2025.
+
+  What this means for you:
+
+  - The Firebase CLI commands for managing this configuration (functions:config:set, get, unset, clone, and export) are deprecated. These commands no longer work after December 31, 2025.
+  - firebase deploy command will fail for functions that use the legacy functions.config() API after December 31, 2025.
+
+  Existing deployments will continue to work with their current configuration.
+
+  See your migration options at: https://firebase.google.com/docs/functions/config-env#migrate-to-dotenv
+i  functions: packaged C:\Users\raman\OneDrive\Deva\functions (116.97 KB) for uploading
+i  functions: ensuring required API cloudscheduler.googleapis.com is enabled...
+i  functions: ensuring required API run.googleapis.com is enabled...
+i  functions: ensuring required API eventarc.googleapis.com is enabled...
+i  functions: ensuring required API pubsub.googleapis.com is enabled...
+i  functions: ensuring required API storage.googleapis.com is enabled...
+i  functions: generating the service identity for pubsub.googleapis.com...
+i  functions: generating the service identity for eventarc.googleapis.com...
+i  functions: Skipping the deploy of unchanged functions.
++  functions[checkPremiumPlacements(us-central1)] Skipped (No changes detected)
++  functions[api(us-central1)] Skipped (No changes detected)
+!  functions: No cleanup policy detected for repositories in us-central1. This may result in a small monthly bill as container images accumulate over time.
+√ How many days do you want to keep container images before they're deleted? 5
+i  functions: Configuring cleanup policy for repository in us-central1. Images older than 5 days will be automatically deleted.
+i  functions: Configured cleanup policy for repository in us-central1.
+
++  Deploy complete!
+
+Project Console: https://console.firebase.google.com/project/devebhyo-4a8a2/overview

@@ -4,8 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
-
 import { useAuth } from '../contexts/AuthContext';
 import { useUser } from '../contexts/UserContext';
 import { AuthNavigator } from './AuthNavigator';
@@ -18,9 +16,6 @@ import {
   registerForPushNotifications,
   savePushToken
 } from '../services/notifications';
-
-// Keep the splash screen visible while we fetch resources
-SplashScreen.preventAutoHideAsync();
 
 export type RootStackParamList = {
   Auth: undefined;
@@ -40,9 +35,6 @@ export const AppNavigator: React.FC = () => {
       try {
         // Wait for auth state to be initialized
         if (authState.isInitialized) {
-          // Hide splash screen
-          await SplashScreen.hideAsync();
-          
           // Register for push notifications if authenticated
           if (isAuthenticated && authState.userData) {
             const token = await registerForPushNotifications();
@@ -53,7 +45,6 @@ export const AppNavigator: React.FC = () => {
         }
       } catch (error) {
         console.error('App initialization error:', error);
-        await SplashScreen.hideAsync();
       }
     };
     

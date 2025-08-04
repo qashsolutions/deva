@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FF6B35"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -39,9 +39,21 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@stripe/stripe-react-native",
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.devebhyo.app",
+          "enableGooglePay": true
+        }
+      ],
       "expo-notifications"
     ],
-    "scheme": "devebhyo"
+    "scheme": "devebhyo",
+    "jsEngine": "hermes",
+    "extra": {
+      "eas": {
+        "projectId": "773198b6-4535-4987-915a-4819cb718811"
+      }
+    }
   }
 }

@@ -45,7 +45,7 @@ const config: AIConfig = {
     gemini: {
       name: 'gemini',
       apiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY || '',
-      model: 'gemini-1.5-pro',
+      model: 'gemini-2.5-flash',
       maxTokens: 1000,
       temperature: 0.7,
     },
