@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Platform } from 'react-native';
+import { StripeProvider } from '@stripe/stripe-react-native';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { AuthProvider } from './src/contexts/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
@@ -32,12 +33,16 @@ export default function App() {
     requestPermissions();
   }, []);
 
-  // For now, skip Stripe to test the core app
   return (
     <AuthProvider>
       <UserProvider>
         <BookingProvider>
-          <AppNavigator />
+          <StripeProvider
+            publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''}
+            merchantIdentifier="merchant.com.devebhyo.app"
+          >
+            <AppNavigator />
+          </StripeProvider>
         </BookingProvider>
       </UserProvider>
     </AuthProvider>
